@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "subreddit")
+@Table(name = "sub_reddits")
 public class Subreddit {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +36,12 @@ public class Subreddit {
   @NotBlank(message = "Description is required")
   private String description;
 
-  @OneToMany(fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "subreddit", fetch = FetchType.LAZY)
   private List<Post> posts;
 
   private Instant createdDate;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
+  @JoinColumn(name = "user_id")
   private User user;
 }

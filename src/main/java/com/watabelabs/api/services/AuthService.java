@@ -9,6 +9,7 @@ import com.watabelabs.api.repository.UserRepository;
 import com.watabelabs.api.repository.VerificationTokenRepository;
 import java.time.Instant;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,8 +51,15 @@ public class AuthService {
   }
 
   private String generateVerificationToken(User user) {
+    String token = UUID.randomUUID().toString();
+    VerificationToken verificationToken = new VerificationToken();
+    verificationToken.setToken(token);
+    verificationToken.setUser(user);
+
     log.debug("User Object line 46: {}", user);
-    return "hello";
+    verificationTokenRepository.save(verificationToken);
+
+    return token;
   }
 
   public void verifyAccount(String token) {

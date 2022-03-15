@@ -32,11 +32,8 @@ public class Post {
   @NotBlank(message = "Name cannot be empty or NULL")
   private String name;
 
-  @Nullable
-  private String url;
-  @Nullable
-  @Lob
-  private String description;
+  @Nullable private String url;
+  @Nullable @Lob private String description;
   private Integer voteCount;
 
   @ManyToOne(fetch = FetchType.LAZY)
