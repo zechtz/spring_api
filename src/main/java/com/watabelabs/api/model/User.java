@@ -1,6 +1,7 @@
 package com.watabelabs.api.model;
 
 import java.time.Instant;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,9 +31,13 @@ public class User {
   @NotBlank(message = "Password is required")
   private String password;
 
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "token_id", referencedColumnName = "id")
+  private VerificationToken token;
+
   @Email
   @NotEmpty(message = "Email Address is required")
-  private String Email;
+  private String email;
 
   private Instant createdAt;
   private boolean enabled;
